@@ -1,10 +1,10 @@
 const express = require('express');
 const app = express();
 const port = 8000;
-const pdfGenerator = require('./pdfGenerator');
+const quaotation = require('./quaotation');
  
 app.get('/pdf', (req, res) => {
-  pdfGenerator.generatePDF((err, data) => {
+  quaotation.generateQuatation((err, data) => {
     if (err) {
       res.status(500).send('Error generating PDF');
     } else {
