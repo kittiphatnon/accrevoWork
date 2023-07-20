@@ -1,7 +1,7 @@
 const { jsPDF } = require('jspdf');
 const fs = require('fs');
 const https = require('https');
-const wordcut = require("wordcut");
+const wordcut = require('wordcut');
 
 process.on('uncaughtException', function (err) {
   console.log(err);
@@ -51,18 +51,19 @@ const items = {
     thai:'หนึ่งแสนสี่หมื่นหนึ่งพันสองร้อยสามสิบสี่บาทห้าสิบหกสตางค์',
     eng:'One Thousand Two Hundred Thirty Four Baht Fifty Six Satang',
   },
-  vatAmount:'1869.54',       //หาตัวแปรของ subTotal กับ Total ไม่เจอ   dsadsadg
+  vatAmount:'1869.54',       //หาตัวแปรของ subTotal กับ Total ไม่เจอ
   discountAmount:'0.00',
   grandTotal:'1869.54',
   subTotal:'1869.54',
   total:'1869.54',
-  paymentDescription:'คอมพ์มหภาคตอกย้ำแพทยสภา โหงวเฮ้ง โซลาร์แซวพุทธภูมิกลาส  ซัพพลายปัจเจกชนผลักดันพันธกิจ อีสเตอร์ เมจิกล็อตช็อปเปอร์พันธุวิศวกรรม เอ็กซ์เพรส วาฟเฟิลเซอร์วิสดีพาร์ตเมนต์ ไฮไลต์เซ็กซี่ ล็อตตอกย้ำ เฮอร์ริเคนธรรม',
-  remark:'คอมพ์มหภาคตอกย้ำแพทยสภา โหงวเฮ้ง โซลาร์แซวพุทธภูมิกลาส มายองเนส ซัพพลายปัจเจกชนผลักดันพันธกิจ อีสเตอร์ เมจิกล็อตช็อปเปอร์พันธุวิศวกรรม เอ็กซ์เพรส วาฟเฟิลเซอร์วิสดีพาร์ตเมนต์ ไฮไลต์เซ็กซี่ ล็อตตอกย้ำ เฮอร์ริเคนธรรม',
+  remark:'คอรัปชั่นช็อคซิมโฟนี่ศิลปวัฒนธรรมตุ๊กตุ๊ก มิลค์ แคนู รีดไถมาร์ชเฟรชก่อนหน้า ซีเนียร์อุเทนรองรับ แซ็กโซโฟนซูมสต็อคจ๊อกกี้ โปรเจคท์ภคันทลาพาธธรรมาภิบาล โรแมนติกเฝอก่อนหน้าแม่ค้า ป๊อกเทเลกราฟโพลล์ วิน รามเทพ เซาท์ตนเองเกจิเทอร์โบไอติม ผิดพลาดชัวร์ โรแมนติคโปรเจกเตอร์เกรดไลท์ ไวอากร้าออดิทอเรียมเสกสรรค์แอปเปิ้ลไวกิ้ง ชินบัญชรคอนโทรลเวณิกาสเก็ตช์ มาร์เก็ตแคนยอนนิรันดร์ เวิลด์พล็อตมั้งอาว์เคลื่อนย้าย ทรูแฟ้บ ชินบัญชร วอล์คไฟต์อิเลียด สตาร์หมายปองเยอร์บีราแมมโบ้ มาร์คฮองเฮา เกย์ออกแบบ ดยุคเซ็กซ์ คอร์ป เรซิ่นแอดมิสชันเยอบีรา ยูโรหลินจือกรุ๊ปสมาพันธ์ล็อบบี้ มายาคติสตาร์โอวัลตินออโต้เซฟตี้ ตู้เซฟถูกต้องโรลออนไลฟ์ มือถือก่อนหน้าสเก็ตช์แบ็กโฮแฮนด์',
   approvalPerson:'กิตติภัทธ์ โลวตระกูล',     //ไม่แน่ใจ
-  
+  paymentCondition:'จ่ายภายใน 30 วัน โดยโอนไปที่บัญชีธนาคารกรุงไทย 12345678975',
+  dueDate:'2023-07-19T00:00:00.000Z' ,
+  paymentDescription:'ฟหกดเ้่า',
 };
 
-async function generateQuatation(callback) {
+async function generateReceipt(callback) {
   const doc = new jsPDF();
   
   //หาจุดกึ่งกลางของช่อง
@@ -107,9 +108,9 @@ async function generateQuatation(callback) {
     //หัวข้อ
     doc.setFont('THSarabunNew','bold');
     doc.setFontSize(26);
-    doc.text("ใบเสนอราคา",200, 25,'right');
+    doc.text("ใบเสร็จรับเงิน",200, 25,'right');
     doc.setFontSize(16);
-    doc.text("Quotation",200, 30,'right');
+    doc.text("Receipt",200, 30,'right');
     
     //คนขาย
     doc.setFontSize(12);
@@ -441,5 +442,5 @@ async function generateQuatation(callback) {
 }
 
 module.exports = {
-  generateQuatation
+  generateReceipt
 };
