@@ -215,8 +215,8 @@ async function generateInvoice(callback) {
     doc.text(items.total, 200, 210,'right');
     doc.text(items.grandTotal, 200, 215,'right');
     
-    const moneyInText = items.moneyText.thai;
-    const moneyEngText = items.moneyText.eng;
+    const moneyInText = thaiBaht.ArabicNumberToText(items.grandTotal);
+    const moneyEngText = engBaht.toWords(items.grandTotal);
     const allMoneyText = 'จำนวนเงินรวมทั้งสิ้น  ' + moneyInText;
     //เขียนจำนวนเงินเป็นตัวหนังสือ
     

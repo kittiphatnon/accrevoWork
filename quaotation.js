@@ -2,6 +2,8 @@ const { jsPDF } = require('jspdf');
 const fs = require('fs');
 const https = require('https');
 const wordcut = require("wordcut");
+const thaiBaht = require('./thaiBaht');
+const engBaht = require('./engBaht');
 
 process.on('uncaughtException', function (err) {
   console.log(err);
@@ -211,8 +213,8 @@ async function generateQuatation(callback) {
     doc.text(items.total, 200, 205,'right');
     doc.text(items.grandTotal, 200, 210,'right');
     
-    const moneyInText = items.moneyText.thai;
-    const moneyEngText = items.moneyText.eng;
+    const moneyInText = thaiBaht.ArabicNumberToText(items.grandTotal);
+    const moneyEngText = engBaht.toWords(items.grandTotal);
     const allMoneyText = 'จำนวนเงินรวมทั้งสิ้น  ' + moneyInText;
     //เขียนจำนวนเงินเป็นตัวหนังสือ
     

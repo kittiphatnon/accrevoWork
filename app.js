@@ -6,10 +6,11 @@ const invoice = require('./invoice');
 const receipt = require('./receipt');
 const purchaseRequisition = require('./purchaseRequisition');
 const purchaseOrder = require('./purchaseOrder');
+const billingNote = require('./billingNote');
 
 
  //Quaotation
-/* app.get('/pdf', (req, res) => {
+app.get('/pdf', (req, res) => {
   quaotation.generateQuatation((err, data) => {
     if (err) {
       res.status(500).send('Error generating PDF');
@@ -18,10 +19,10 @@ const purchaseOrder = require('./purchaseOrder');
       res.send(data);
     }
   });
-}); */
+});
 
 //Invoice
-app.get('/pdf', (req, res) => {
+/* app.get('/pdf', (req, res) => {
   invoice.generateInvoice((err, data) => {
     if (err) {
       res.status(500).send('Error generating PDF');
@@ -30,7 +31,7 @@ app.get('/pdf', (req, res) => {
       res.send(data);
     }
   });
-});
+}); */
 
 //Receipt
 /* app.get('/pdf', (req, res) => {
@@ -59,6 +60,18 @@ app.get('/pdf', (req, res) => {
 //Purchase Order
 /* app.get('/pdf', (req, res) => {
   purchaseOrder.generatePurchaseOrder((err, data) => {
+    if (err) {
+      res.status(500).send('Error generating PDF');
+    } else {
+      res.setHeader('Content-Type', 'application/pdf');
+      res.send(data);
+    }
+  });
+}); */
+
+//Billing Note
+/* app.get('/pdf', (req, res) => {
+  billingNote.generateBillingNote((err, data) => {
     if (err) {
       res.status(500).send('Error generating PDF');
     } else {
