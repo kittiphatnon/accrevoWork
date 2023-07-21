@@ -5,6 +5,7 @@ const quaotation = require('./quaotation');
 const invoice = require('./invoice');
 const receipt = require('./receipt');
 const purchaseRequisition = require('./purchaseRequisition');
+const purchaseOrder = require('./purchaseOrder');
 
 
  //Quaotation
@@ -44,8 +45,20 @@ const purchaseRequisition = require('./purchaseRequisition');
 }); */
 
 //Purchase Requisition
-app.get('/pdf', (req, res) => {
+/* app.get('/pdf', (req, res) => {
   purchaseRequisition.generatePurchaseRequisition((err, data) => {
+    if (err) {
+      res.status(500).send('Error generating PDF');
+    } else {
+      res.setHeader('Content-Type', 'application/pdf');
+      res.send(data);
+    }
+  });
+}); */
+
+//Purchase Order
+app.get('/pdf', (req, res) => {
+  purchaseOrder.generatePurchaseOrder((err, data) => {
     if (err) {
       res.status(500).send('Error generating PDF');
     } else {

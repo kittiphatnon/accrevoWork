@@ -62,7 +62,7 @@ const items = {
   
 };
 
-async function generatePurchaseRequisition(callback) {
+async function generatePurchaseOrder(callback) {
   const doc = new jsPDF();
   
   //หาจุดกึ่งกลางของช่อง
@@ -107,9 +107,9 @@ async function generatePurchaseRequisition(callback) {
     //หัวข้อ
     doc.setFont('THSarabunNew','bold');
     doc.setFontSize(26);
-    doc.text("ใบขอซื้อ",200, 25,'right');
+    doc.text("ใบสั่งซื้อ",200, 25,'right');
     doc.setFontSize(16);
-    doc.text("Purchase Requisition",200, 30,'right');
+    doc.text("Purchase Order",200, 30,'right');
     
     //คนขาย
     doc.setFontSize(12);
@@ -346,7 +346,7 @@ async function generatePurchaseRequisition(callback) {
     doc.setTextColor(0,0,0);
     doc.setFont('THSarabunNew','bold');
     doc.setFontSize(12);
-    doc.text("ยอมรับใบขอซื้อ / Accepted by", 157.5, 252);
+    doc.text("ยอมรับใบสั่งซื้อ / Accepted by", 157.5, 252);
     doc.setLineWidth(0.1);
     doc.line(160, 270, 192.5, 270); //ลายเซ็น
     await addImageToPDF('https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Autograph_of_Benjamin_Franklin.svg/1200px-Autograph_of_Benjamin_Franklin.svg.png', 161.35, 255, 30.8, 14.23);
@@ -413,5 +413,5 @@ async function generatePurchaseRequisition(callback) {
 }
 
 module.exports = {
-  generatePurchaseRequisition
+  generatePurchaseOrder
 };

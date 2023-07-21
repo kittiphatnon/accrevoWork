@@ -373,6 +373,7 @@ async function generateReceipt(callback) {
     doc.text('ตราประทับบริษัท', getStartPoint('ตราประทับบริษัท',47.5)+105, 282);
     
     //text กล่องที่สี่
+    doc.setTextColor(0,0,0);
     doc.setFont('THSarabunNew','bold');
     doc.setFontSize(12);
     doc.text("ยอมรับใบเสนอราคา / Accepted by", 154.5, 252);
