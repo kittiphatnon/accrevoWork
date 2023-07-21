@@ -4,10 +4,11 @@ const port = 8000;
 const quaotation = require('./quaotation');
 const invoice = require('./invoice');
 const receipt = require('./receipt');
+const purchaseRequisition = require('./purchaseRequisition');
 
 
  //Quaotation
-app.get('/pdf', (req, res) => {
+/* app.get('/pdf', (req, res) => {
   quaotation.generateQuatation((err, data) => {
     if (err) {
       res.status(500).send('Error generating PDF');
@@ -16,7 +17,7 @@ app.get('/pdf', (req, res) => {
       res.send(data);
     }
   });
-});
+}); */
 
 //Invoice
 /* app.get('/pdf', (req, res) => {
@@ -41,6 +42,18 @@ app.get('/pdf', (req, res) => {
     }
   });
 }); */
+
+//Purchase Requisition
+app.get('/pdf', (req, res) => {
+  purchaseRequisition.generatePurchaseRequisition((err, data) => {
+    if (err) {
+      res.status(500).send('Error generating PDF');
+    } else {
+      res.setHeader('Content-Type', 'application/pdf');
+      res.send(data);
+    }
+  });
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
