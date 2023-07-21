@@ -376,7 +376,7 @@ async function generateReceipt(callback) {
     doc.setTextColor(0,0,0);
     doc.setFont('THSarabunNew','bold');
     doc.setFontSize(12);
-    doc.text("ยอมรับใบเสนอราคา / Accepted by", 154.5, 252);
+    doc.text("ยอมรับใบเสร็จรับเงิน / Accepted by", 154, 252);
     doc.setLineWidth(0.1);
     doc.line(160, 270, 192.5, 270); //ลายเซ็น
     await addImageToPDF('https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Autograph_of_Benjamin_Franklin.svg/1200px-Autograph_of_Benjamin_Franklin.svg.png', 161.35, 255, 30.8, 14.23);
@@ -398,23 +398,25 @@ async function generateReceipt(callback) {
     }
     return slicedArray;
   }
-
+  
   const dataEachPage = sliceArray(items.documentItems, 6);
-
- for (let i = 0; i < dataEachPage.length; i++) {
-  if (i < dataEachPage.length - 1) {
-    await createHeader(items);
-    await createTable(dataEachPage[i]);
-    doc.addPage();
+  
+  for (let i = 0; i < dataEachPage.length; i++) {
+    if (i < dataEachPage.length - 1) {
+      await createHeader(items);
+      await createTable(dataEachPage[i]);
+      doc.text((i+1).toString() + '/' + dataEachPage.length.toString(), 200, 10, 'right')
+      doc.addPage();
+    }
+    else  {
+      await createHeader(items);
+      await createTable(dataEachPage[i]);
+      await createFooter(items);
+      doc.text((i+1).toString() + '/' + dataEachPage.length.toString(), 200, 10, 'right')
+    }
   }
-  else  {
-    await createHeader(items);
-    await createTable(dataEachPage[i]);
-    await createFooter(items);
-  }
-}
-
-/*   //สร้าง element
+  
+  /*   //สร้าง element
   await createHeader(items);
   await createTable(items);
   await createFooter(items); */

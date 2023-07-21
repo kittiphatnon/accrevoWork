@@ -371,18 +371,20 @@ async function generatePurchaseRequisition(callback) {
 
   const dataEachPage = sliceArray(items.documentItems, 6);
 
- for (let i = 0; i < dataEachPage.length; i++) {
-  if (i < dataEachPage.length - 1) {
-    await createHeader(items);
-    await createTable(dataEachPage[i]);
-    doc.addPage();
+  for (let i = 0; i < dataEachPage.length; i++) {
+    if (i < dataEachPage.length - 1) {
+      await createHeader(items);
+      await createTable(dataEachPage[i]);
+      doc.text((i+1).toString() + '/' + dataEachPage.length.toString(), 200, 10, 'right')
+      doc.addPage();
+    }
+    else  {
+      await createHeader(items);
+      await createTable(dataEachPage[i]);
+      await createFooter(items);
+      doc.text((i+1).toString() + '/' + dataEachPage.length.toString(), 200, 10, 'right')
+    }
   }
-  else  {
-    await createHeader(items);
-    await createTable(dataEachPage[i]);
-    await createFooter(items);
-  }
-}
 
 /*   //สร้าง element
   await createHeader(items);

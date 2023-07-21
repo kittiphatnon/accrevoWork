@@ -21,7 +21,7 @@ const purchaseOrder = require('./purchaseOrder');
 }); */
 
 //Invoice
-/* app.get('/pdf', (req, res) => {
+app.get('/pdf', (req, res) => {
   invoice.generateInvoice((err, data) => {
     if (err) {
       res.status(500).send('Error generating PDF');
@@ -30,7 +30,7 @@ const purchaseOrder = require('./purchaseOrder');
       res.send(data);
     }
   });
-}); */
+});
 
 //Receipt
 /* app.get('/pdf', (req, res) => {
@@ -57,7 +57,7 @@ const purchaseOrder = require('./purchaseOrder');
 }); */
 
 //Purchase Order
-app.get('/pdf', (req, res) => {
+/* app.get('/pdf', (req, res) => {
   purchaseOrder.generatePurchaseOrder((err, data) => {
     if (err) {
       res.status(500).send('Error generating PDF');
@@ -66,7 +66,7 @@ app.get('/pdf', (req, res) => {
       res.send(data);
     }
   });
-});
+}); */
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
