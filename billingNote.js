@@ -2,6 +2,8 @@ const { jsPDF } = require('jspdf');
 const fs = require('fs');
 const https = require('https');
 const wordcut = require('wordcut');
+const thaiBaht = require('./thaiBaht');
+const engBaht = require('./engBaht');
 
 process.on('uncaughtException', function (err) {
   console.log(err);
@@ -107,9 +109,9 @@ async function generateBillingNote(callback) {
     //หัวข้อ
     doc.setFont('THSarabunNew','bold');
     doc.setFontSize(26);
-    doc.text("ใบแจ้งหนี้",200, 25,'right');
+    doc.text("ใบวางบิล",200, 25,'right');
     doc.setFontSize(16);
-    doc.text("Invoice",200, 30,'right');
+    doc.text("Billing Note",200, 30,'right');
     
     //คนขาย
     doc.setFontSize(12);
@@ -166,44 +168,41 @@ async function generateBillingNote(callback) {
     //หัวตาราง
     doc.setFont('THSarabunNew','bold');
     doc.rect(10, 100, 190, 15);
-    doc.text('เลขที่', 14, 105);
-    doc.text('No.', 14.7, 110);
-    doc.text('เลขที่ใบแจ้งหนี้', 30, 105);
-    doc.text('Invoice No.', 28.5, 110);
-    doc.text('วันที่เอกสาร', 65, 105);
-    doc.text('Issue', 61, 110);
-    doc.text('วันที่ครบกำหนด', 102, 105);
-    doc.text('Valid', 100.5, 110);
-    doc.text('จำนวนเงิน(บาท)', 119, 105);
-    doc.text('Sup Total(Baht)', 119.5, 110);
-    doc.text('ภาษีมูลค่าเพิ่ม(บาท)', 135, 105);
-    doc.text('Vat(Baht)', 136.2, 110);
-    doc.text('ราคารวม(บาท)', 172.5, 105);
-    doc.text('Total(Baht)', 170.5, 110);
+    doc.text('เลขที่', getStartPoint('เลขที่',14)+10, 105);
+    doc.text('No.', getStartPoint('No.',14)+10, 110);
+    doc.text('เลขที่ใบแจ้งหนี้', getStartPoint('เลขที่ใบแจ้งหนี้',36)+24, 105);
+    doc.text('Invoice No.', getStartPoint('Invoice No.',36)+24, 110);
+    doc.text('วันที่เอกสาร', getStartPoint('วันที่เอกสาร',25)+60, 105);
+    doc.text('Issue', getStartPoint('Issue',25)+60, 110);
+    doc.text('วันที่ครบกำหนด', getStartPoint('วันที่ครบกำหนด',25)+85, 105);
+    doc.text('Valid', getStartPoint('Valid',25)+85, 110);
+    doc.text('จำนวนเงิน(บาท)', getStartPoint('จำนวนเงิน(บาท)',30)+110, 105);
+    doc.text('Sup Total(Baht)', getStartPoint('Sup Total(Baht)',30)+110, 110);
+    doc.text('ภาษีมูลค่าเพิ่ม(บาท)', getStartPoint('ภาษีมูลค่าเพิ่ม(บาท)',30)+140, 105);
+    doc.text('Vat(Baht)', getStartPoint('Vat(Baht)',30)+140, 110);
+    doc.text('ราคารวม(บาท)', getStartPoint('ราคารวม(บาท)',30)+170, 105);
+    doc.text('Total(Baht)', getStartPoint('Total(Baht)',30)+170, 110);
     
     //ข้อมูลในตาราง
     doc.setFont('THSarabunNew','normal');
     doc.setTextColor(0,0,0);
     
     //เส้นกั้นระหว่างช่อง
-    doc.line(24, 100, 24, 190); //24-10 = 14 => หน่วยเป็น mm
-    doc.line(48, 100, 48, 190); //48-24 = 24
-    doc.line(98, 100, 98, 190); //98-48 = 50
-    doc.line(114.5, 100, 114.5, 190); //114.5-98 = 16.5
-    doc.line(130, 100, 130, 190); //130-114.5 = 15.5
-    doc.line(163, 100, 163, 190); //163-130 = 33
+    doc.line(24, 100, 24, 189); //24-10 = 14 => หน่วยเป็น mm
+    doc.line(60, 100, 60, 189); //60-24 = 36
+    doc.line(85, 100, 85, 189); //85-60 = 25
+    doc.line(110, 100, 110, 189); //110-85 = 25
+    doc.line(140, 100, 140, 189); //140-110 = 30
+    doc.line(170, 100, 170, 189); //170-140 = 30
     
     for (let i=0; i<items.length; i++) {
       doc.text(items[i].id, getStartPoint(items[i].id,14)+10, 122.5 + (i*12));
-      doc.text(items[i].productId, getStartPoint(items[i].productId,24)+24, 122.5 + (i*12));
-      doc.text(items[i].productName, getStartPoint(items[i].productName,50)+48, 120 + (i*12));
-      doc.setFontSize(10);
-      doc.text(items[i].productDescription, getStartPoint(items[i].productDescription,50)+48, 125 + (i*12));
-      doc.setFontSize(12);
-      doc.text(items[i].quantity.toString(), getStartPoint(items[i].quantity.toString(),16.5)+98, 122.5 + (i*12));
-      doc.text(items[i].unitName, getStartPoint(items[i].unitName,15.5)+114.5, 122.5 + (i*12));
-      doc.text(items[i].unitPrice.toString(), getStartPoint(items[i].unitPrice.toString(),33)+130, 122.5 + (i*12));
-      doc.text(items[i].priceBeforeTax.toString(), getStartPoint(items[i].priceBeforeTax.toString(),37)+163, 122.5 + (i*12));
+      doc.text(items[i].productId, getStartPoint(items[i].productId,36)+24, 122.5 + (i*12));
+      doc.text(items[i].productName, getStartPoint(items[i].productName,25)+60, 122.5 + (i*12));
+      doc.text(items[i].quantity.toString(), getStartPoint(items[i].quantity.toString(),25)+85, 122.5 + (i*12));
+      doc.text(items[i].unitName, getStartPoint(items[i].unitName,30)+110, 122.5 + (i*12));
+      doc.text(items[i].unitPrice.toString(), getStartPoint(items[i].unitPrice.toString(),30)+140, 122.5 + (i*12));
+      doc.text(items[i].priceBeforeTax.toString(), getStartPoint(items[i].priceBeforeTax.toString(),30)+170, 122.5 + (i*12));
     }
     
   }
@@ -223,8 +222,8 @@ async function generateBillingNote(callback) {
     doc.text(items.total, 200, 210,'right');
     doc.text(items.grandTotal, 200, 215,'right');
     
-    const moneyInText = items.moneyText.thai;
-    const moneyEngText = items.moneyText.eng;
+    const moneyInText = thaiBaht.ArabicNumberToText(items.grandTotal);
+    const moneyEngText = engBaht.toWords(items.grandTotal);
     const allMoneyText = 'จำนวนเงินรวมทั้งสิ้น  ' + moneyInText;
     //เขียนจำนวนเงินเป็นตัวหนังสือ
     

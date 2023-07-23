@@ -10,7 +10,7 @@ const billingNote = require('./billingNote');
 
 
  //Quaotation
-app.get('/pdf', (req, res) => {
+/* app.get('/pdf', (req, res) => {
   quaotation.generateQuatation((err, data) => {
     if (err) {
       res.status(500).send('Error generating PDF');
@@ -19,7 +19,7 @@ app.get('/pdf', (req, res) => {
       res.send(data);
     }
   });
-});
+}); */
 
 //Invoice
 /* app.get('/pdf', (req, res) => {
@@ -70,7 +70,7 @@ app.get('/pdf', (req, res) => {
 }); */
 
 //Billing Note
-/* app.get('/pdf', (req, res) => {
+app.get('/pdf', (req, res) => {
   billingNote.generateBillingNote((err, data) => {
     if (err) {
       res.status(500).send('Error generating PDF');
@@ -79,7 +79,7 @@ app.get('/pdf', (req, res) => {
       res.send(data);
     }
   });
-}); */
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

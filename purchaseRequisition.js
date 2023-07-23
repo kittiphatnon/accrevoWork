@@ -2,6 +2,8 @@ const { jsPDF } = require('jspdf');
 const fs = require('fs');
 const https = require('https');
 const wordcut = require("wordcut");
+const thaiBaht = require('./thaiBaht');
+const engBaht = require('./engBaht');
 
 process.on('uncaughtException', function (err) {
   console.log(err);
