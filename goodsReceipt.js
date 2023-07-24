@@ -62,10 +62,10 @@ const items = {
   approvalPerson:'กิตติภัทธ์ โลวตระกูล',     //ไม่แน่ใจ
   paymentCondition:'จ่ายภายใน 30 วัน โดยโอนไปที่บัญชีธนาคารกรุงไทย 12345678975',
   dueDate:'2023-07-19T00:00:00.000Z' ,
-  paymentDescription:'คอมพ์มหภาคตอกย้ำแพทยสภา โหงวเฮ้ง โซลาร์แซวพุทธภูมิกลาส  ซัพพลายปัจเจกชนผลักดันพันธกิจ อีสเตอร์ เมจิกล็อตช็อปเปอร์พันธุวิศวกรรม เอ็กซ์เพรส วาฟเฟิลเซอร์วิสดีพาร์ตเมนต์ ไฮไลต์เซ็กซี่ ล็อตตอกย้ำ เฮอร์ริเคนธรรม'
+  paymentDescription:'คอมพ์มหภาคตอกย้ำแพทยสภา โหงวเฮ้ง โซลาร์แซวพุทธภูมิกลาส  ซัพพลายปัจเจกชนผลักดันพันธกิจ อีสเตอร์ เมจิกล็อตช็อปเปอร์พันธุวิศวกรรม เอ็กซ์เพรส วาฟเฟิลเซอร์วิสดีพาร์ตเมนต์ ไฮไลต์เซ็กซี่ ล็อตตอกย้ำ เฮอร์ริเคนธรรม',
 };
 
-async function generateBillingNote(callback) {
+async function generateGoodsReceipt(callback) {
   const doc = new jsPDF();
   
   //หาจุดกึ่งกลางของช่อง
@@ -110,9 +110,9 @@ async function generateBillingNote(callback) {
     //หัวข้อ
     doc.setFont('THSarabunNew','bold');
     doc.setFontSize(26);
-    doc.text("ใบวางบิล",200, 25,'right');
+    doc.text("ใบรับสินค้า",200, 25,'right');
     doc.setFontSize(16);
-    doc.text("Billing Note",200, 30,'right');
+    doc.text("Goods Receipt",200, 30,'right');
     
     //คนขาย
     doc.setFontSize(12);
@@ -169,41 +169,36 @@ async function generateBillingNote(callback) {
     //หัวตาราง
     doc.setFont('THSarabunNew','bold');
     doc.rect(10, 100, 190, 15);
-    doc.text('เลขที่', getStartPoint('เลขที่',14)+10, 105);
-    doc.text('No.', getStartPoint('No.',14)+10, 110);
-    doc.text('เลขที่ใบแจ้งหนี้', getStartPoint('เลขที่ใบแจ้งหนี้',36)+24, 105);
-    doc.text('Invoice No.', getStartPoint('Invoice No.',36)+24, 110);
-    doc.text('วันที่เอกสาร', getStartPoint('วันที่เอกสาร',25)+60, 105);
-    doc.text('Issue', getStartPoint('Issue',25)+60, 110);
-    doc.text('วันที่ครบกำหนด', getStartPoint('วันที่ครบกำหนด',25)+85, 105);
-    doc.text('Valid', getStartPoint('Valid',25)+85, 110);
-    doc.text('จำนวนเงิน(บาท)', getStartPoint('จำนวนเงิน(บาท)',30)+110, 105);
-    doc.text('Sup Total(Baht)', getStartPoint('Sup Total(Baht)',30)+110, 110);
-    doc.text('ภาษีมูลค่าเพิ่ม(บาท)', getStartPoint('ภาษีมูลค่าเพิ่ม(บาท)',30)+140, 105);
-    doc.text('Vat(Baht)', getStartPoint('Vat(Baht)',30)+140, 110);
-    doc.text('ราคารวม(บาท)', getStartPoint('ราคารวม(บาท)',30)+170, 105);
-    doc.text('Total(Baht)', getStartPoint('Total(Baht)',30)+170, 110);
+    doc.text('เลขที่', 14, 105);
+    doc.text('No.', 14.7, 110);
+    doc.text('รหัสสินค้า', 30, 105);
+    doc.text('Product No.', 28.5, 110);
+    doc.text('สินค้า/คำอธิบาย', 65, 105);
+    doc.text('Product/Description', 61, 110);
+    doc.text('จำนวน', 102, 105);
+    doc.text('Quantity', 100.5, 110);
+    doc.text('หน่วย', 119, 105);
+    doc.text('Unit', 119.5, 110);
+    doc.text('ราคาต่อหน่วย(บาท)', 135, 105);
+    doc.text('Unit Price(Baht)', 136.2, 110);
+    doc.text('มูลค่าก่อนภาษี', 172.5, 105);
+    doc.text('Pre-tax amount', 170.5, 110);
     
     //ข้อมูลในตาราง
     doc.setFont('THSarabunNew','normal');
     doc.setTextColor(0,0,0);
     
-/*     //เส้นกั้นระหว่างช่อง
-    doc.line(24, 100, 24, 189); //24-10 = 14 => หน่วยเป็น mm
-    doc.line(60, 100, 60, 189); //60-24 = 36
-    doc.line(85, 100, 85, 189); //85-60 = 25
-    doc.line(110, 100, 110, 189); //110-85 = 25
-    doc.line(140, 100, 140, 189); //140-110 = 30
-    doc.line(170, 100, 170, 189); //170-140 = 30 */
-    
     for (let i=0; i<items.length; i++) {
       doc.text(items[i].id, getStartPoint(items[i].id,14)+10, 122.5 + (i*12));
-      doc.text(items[i].productId, getStartPoint(items[i].productId,36)+24, 122.5 + (i*12));
-      doc.text(items[i].productName, getStartPoint(items[i].productName,25)+60, 122.5 + (i*12));
-      doc.text(items[i].quantity.toString(), getStartPoint(items[i].quantity.toString(),25)+85, 122.5 + (i*12));
-      doc.text(items[i].unitName, getStartPoint(items[i].unitName,30)+110, 122.5 + (i*12));
-      doc.text(items[i].unitPrice.toString(), getStartPoint(items[i].unitPrice.toString(),30)+140, 122.5 + (i*12));
-      doc.text(items[i].priceBeforeTax.toString(), getStartPoint(items[i].priceBeforeTax.toString(),30)+170, 122.5 + (i*12));
+      doc.text(items[i].productId, getStartPoint(items[i].productId,24)+24, 122.5 + (i*12));
+      doc.text(items[i].productName, getStartPoint(items[i].productName,50)+48, 120 + (i*12));
+      doc.setFontSize(10);
+      doc.text(items[i].productDescription, getStartPoint(items[i].productDescription,50)+48, 125 + (i*12));
+      doc.setFontSize(12);
+      doc.text(items[i].quantity.toString(), getStartPoint(items[i].quantity.toString(),16.5)+98, 122.5 + (i*12));
+      doc.text(items[i].unitName, getStartPoint(items[i].unitName,15.5)+114.5, 122.5 + (i*12));
+      doc.text(items[i].unitPrice.toString(), getStartPoint(items[i].unitPrice.toString(),33)+130, 122.5 + (i*12));
+      doc.text(items[i].priceBeforeTax.toString(), getStartPoint(items[i].priceBeforeTax.toString(),37)+163, 122.5 + (i*12));
     }
     
   }
@@ -409,9 +404,9 @@ async function generateBillingNote(callback) {
     }
     return slicedArray;
   }
-  
+
   const dataEachPage = sliceArray(items.documentItems, 6);
-  
+
   for (let i = 0; i < dataEachPage.length; i++) {
     if (i < dataEachPage.length - 1) {
       await createHeader(items);
@@ -426,8 +421,8 @@ async function generateBillingNote(callback) {
       doc.text((i+1).toString() + '/' + dataEachPage.length.toString(), 200, 10, 'right')
     }
   }
-  
-  /*   //สร้าง element
+
+/*   //สร้าง element
   await createHeader(items);
   await createTable(items);
   await createFooter(items); */
@@ -457,5 +452,5 @@ async function generateBillingNote(callback) {
 
 
 module.exports = {
-  generateBillingNote
+  generateGoodsReceipt
 };

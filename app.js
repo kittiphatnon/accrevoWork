@@ -7,7 +7,7 @@ const receipt = require('./receipt');
 const purchaseRequisition = require('./purchaseRequisition');
 const purchaseOrder = require('./purchaseOrder');
 const billingNote = require('./billingNote');
-
+const goodsReceipt = require('./goodsReceipt');
 
  //Quaotation
 /* app.get('/pdf', (req, res) => {
@@ -80,6 +80,18 @@ app.get('/pdf', (req, res) => {
     }
   });
 });
+
+//Goods Receipt
+/* app.get('/pdf', (req, res) => {
+  goodsReceipt.generateGoodsReceipt((err, data) => {
+    if (err) {
+      res.status(500).send('Error generating PDF');
+    } else {
+      res.setHeader('Content-Type', 'application/pdf');
+      res.send(data);
+    }
+  });
+}); */
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
