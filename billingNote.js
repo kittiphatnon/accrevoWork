@@ -61,7 +61,8 @@ const items = {
   remark:'คอรัปชั่นช็อคซิมโฟนี่ศิลปวัฒนธรรมตุ๊กตุ๊ก มิลค์ แคนู รีดไถมาร์ชเฟรชก่อนหน้า ซีเนียร์อุเทนรองรับ แซ็กโซโฟนซูมสต็อคจ๊อกกี้ โปรเจคท์ภคันทลาพาธธรรมาภิบาล โรแมนติกเฝอก่อนหน้าแม่ค้า ป๊อกเทเลกราฟโพลล์ วิน รามเทพ เซาท์ตนเองเกจิเทอร์โบไอติม ผิดพลาดชัวร์ โรแมนติคโปรเจกเตอร์เกรดไลท์ ไวอากร้าออดิทอเรียมเสกสรรค์แอปเปิ้ลไวกิ้ง ชินบัญชรคอนโทรลเวณิกาสเก็ตช์ มาร์เก็ตแคนยอนนิรันดร์ เวิลด์พล็อตมั้งอาว์เคลื่อนย้าย ทรูแฟ้บ ชินบัญชร วอล์คไฟต์อิเลียด สตาร์หมายปองเยอร์บีราแมมโบ้ มาร์คฮองเฮา เกย์ออกแบบ ดยุคเซ็กซ์ คอร์ป เรซิ่นแอดมิสชันเยอบีรา ยูโรหลินจือกรุ๊ปสมาพันธ์ล็อบบี้ มายาคติสตาร์โอวัลตินออโต้เซฟตี้ ตู้เซฟถูกต้องโรลออนไลฟ์ มือถือก่อนหน้าสเก็ตช์แบ็กโฮแฮนด์',
   approvalPerson:'กิตติภัทธ์ โลวตระกูล',     //ไม่แน่ใจ
   paymentCondition:'จ่ายภายใน 30 วัน โดยโอนไปที่บัญชีธนาคารกรุงไทย 12345678975',
-  dueDate:'2023-07-19T00:00:00.000Z' 
+  dueDate:'2023-07-19T00:00:00.000Z' ,
+  paymentDescription:'คอมพ์มหภาคตอกย้ำแพทยสภา โหงวเฮ้ง โซลาร์แซวพุทธภูมิกลาส  ซัพพลายปัจเจกชนผลักดันพันธกิจ อีสเตอร์ เมจิกล็อตช็อปเปอร์พันธุวิศวกรรม เอ็กซ์เพรส วาฟเฟิลเซอร์วิสดีพาร์ตเมนต์ ไฮไลต์เซ็กซี่ ล็อตตอกย้ำ เฮอร์ริเคนธรรม'
 };
 
 async function generateBillingNote(callback) {
@@ -268,15 +269,44 @@ async function generateBillingNote(callback) {
     doc.setFont('THSarabunNew', 'bold');
     doc.setFillColor(241, 241, 241);
     doc.setDrawColor(241,241,241);
-    doc.rect(10, 192, 50, 8,'FD');
-    doc.text('หมายเหตุ / Remark', 12, 197);
+    doc.rect(10, 190, 50, 8, 'FD');  
+    doc.text('วิธีการชำระเงิน / Payment Detail', 12, 195);
+    doc.setFillColor(241, 241, 241);
+    doc.setDrawColor(241,241,241);
+    doc.rect(10, 215, 50, 8,'FD');
+    doc.text('หมายเหตุ / Remark', 12, 220);
     
     //ข้อความในวิธีการชำระเงิน
     doc.setFont('THSarabunNew', 'normal');
+    const paymentText = items.paymentDescription;
     const remarkText = items.remark;
+    function displayPaymentText(paymentText) {
+      const maxWidth = 90; // Maximum width in points
+      const maxLines = 3; // Maximum number of lines to display
+      let currentLine = 1;
+      let currentLineWidth = 0;
+      let line = '';
+      wordcut.init();
+      const wordList = wordcut.cut(paymentText);
+      const wordArray = wordList.split('|');
+      wordArray.forEach((word) => {
+        if (currentLine <= maxLines) {
+          if (currentLineWidth + doc.getTextWidth(word) < maxWidth) {
+            line += word;
+            currentLineWidth += doc.getTextWidth(word);
+          } else {
+            doc.text(line, 10, 202 + (5 * (currentLine - 1)));
+            currentLine++;
+            line = word;
+            currentLineWidth = doc.getTextWidth(word);
+          }
+        }
+      });
+      doc.text(line, 10, 202 + (5 * (currentLine - 1)));
+    }
     function displayRemarkText(remarkText) {
       const maxWidth = 90; // Maximum width in points
-      const maxLines = 6; // Maximum number of lines to display
+      const maxLines = 3; // Maximum number of lines to display
       let currentLine = 1;
       let currentLineWidth = 0;
       let line = '';
@@ -289,17 +319,18 @@ async function generateBillingNote(callback) {
             line += word;
             currentLineWidth += doc.getTextWidth(word);
           } else {
-            doc.text(line, 10, 204 + (5 * (currentLine - 1)));
+            doc.text(line, 10, 227 + (5 * (currentLine - 1)));
             currentLine++;
             line = word;
             currentLineWidth = doc.getTextWidth(word);
           }
         }
       });
-      doc.text(line, 10, 204 + (5 * (currentLine - 1)));
+      doc.text(line, 10, 227 + (5 * (currentLine - 1)));
     }
     
     // Example usage:
+    displayPaymentText(paymentText);
     displayRemarkText(remarkText);
     
     // สร้างกล่องลงชื่อ
