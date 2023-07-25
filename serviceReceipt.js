@@ -382,7 +382,7 @@ async function generateServiceReceipt(callback) {
     doc.setFont('THSarabunNew','bold');
     doc.setFontSize(12);
     doc.setTextColor(0,0,0);
-    doc.text("ยอมรับใบแจ้งหนี้ / Accepted by", 156.5, 252);
+    doc.text("ยอมรับใบรับบริการ / Accepted by", 155, 252);
     doc.setLineWidth(0.1);
     doc.line(160, 270, 192.5, 270); //ลายเซ็น
     await addImageToPDF('https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Autograph_of_Benjamin_Franklin.svg/1200px-Autograph_of_Benjamin_Franklin.svg.png', 161.35, 255, 30.8, 14.23);
