@@ -105,6 +105,11 @@ async function generateBillingNote(callback) {
   
   //สร้าง Header
   async function createHeader(items) {
+    //Deco
+    doc.setFillColor(248,96,81);
+    doc.setDrawColor(248,96,81);
+    doc.rect(205, 19, 11, 13, 'FD');
+    doc.setDrawColor(0,0,0);
     //Logo
     await addImageToPDF(items.logoCompany, 10, 10, 20, 24);
     //หัวข้อ
@@ -387,7 +392,7 @@ async function generateBillingNote(callback) {
     doc.setFont('THSarabunNew','bold');
     doc.setFontSize(12);
     doc.setTextColor(0,0,0);
-    doc.text("ยอมรับใบแจ้งหนี้ / Accepted by", 156.5, 252);
+    doc.text("ยอมรับใบวางบิล / Accepted by", 156.5, 252);
     doc.setLineWidth(0.1);
     doc.line(160, 270, 192.5, 270); //ลายเซ็น
     await addImageToPDF('https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Autograph_of_Benjamin_Franklin.svg/1200px-Autograph_of_Benjamin_Franklin.svg.png', 161.35, 255, 30.8, 14.23);

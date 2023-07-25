@@ -105,6 +105,11 @@ async function generateReceipt(callback) {
   
   //สร้าง Header
   async function createHeader(items) {
+    //Deco
+    doc.setFillColor(248,96,81);
+    doc.setDrawColor(248,96,81);
+    doc.rect(205, 19, 11, 13, 'FD');
+    doc.setDrawColor(0,0,0);
     //Logo
     await addImageToPDF(items.logoCompany, 10, 10, 20, 24);
     //หัวข้อ

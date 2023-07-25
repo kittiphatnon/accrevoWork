@@ -104,6 +104,11 @@ async function generateQuatation(callback) {
   
   //สร้าง Header
   async function createHeader(items) {
+    //Deco
+    doc.setFillColor(248,96,81);
+    doc.setDrawColor(248,96,81);
+    doc.rect(205, 19, 11, 13, 'FD');
+    doc.setDrawColor(0,0,0);
     //Logo
     await addImageToPDF(items.logoCompany, 10, 10, 20, 24);
     //หัวข้อ
@@ -399,25 +404,25 @@ async function generateQuatation(callback) {
     }
     return slicedArray;
   }
-
+  
   const dataEachPage = sliceArray(items.documentItems, 6);
-
- for (let i = 0; i < dataEachPage.length; i++) {
-  if (i < dataEachPage.length - 1) {
-    await createHeader(items);
-    await createTable(dataEachPage[i]);
-    doc.text((i+1).toString() + '/' + dataEachPage.length.toString(), 200, 10, 'right')
-    doc.addPage();
+  
+  for (let i = 0; i < dataEachPage.length; i++) {
+    if (i < dataEachPage.length - 1) {
+      await createHeader(items);
+      await createTable(dataEachPage[i]);
+      doc.text((i+1).toString() + '/' + dataEachPage.length.toString(), 200, 10, 'right')
+      doc.addPage();
+    }
+    else  {
+      await createHeader(items);
+      await createTable(dataEachPage[i]);
+      await createFooter(items);
+      doc.text((i+1).toString() + '/' + dataEachPage.length.toString(), 200, 10, 'right')
+    }
   }
-  else  {
-    await createHeader(items);
-    await createTable(dataEachPage[i]);
-    await createFooter(items);
-    doc.text((i+1).toString() + '/' + dataEachPage.length.toString(), 200, 10, 'right')
-  }
-}
-
-/*   //สร้าง element
+  
+  /*   //สร้าง element
   await createHeader(items);
   await createTable(items);
   await createFooter(items); */
