@@ -38,8 +38,8 @@ const items = {
   data: { 0: {
     name:'Head Quater',
   }},
-  eStamp:'https://images.unsplash.com/photo-1490077476659-095159692ab5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1151&q=80',
-  signature:'https://images.unsplash.com/photo-1542370285-b8eb8317691c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1126&q=80',
+  eStamp:'https://images.unsplash.com/photo-1682695796497-31a44224d6d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+  signature:'https://images.unsplash.com/photo-1682695796497-31a44224d6d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
   contactName:'กิตติภัทธ์ จำกัด',
   contactBranch:'สาขา 1',
   contactAddress:'99 หมู่ 1 ตำบล หนองบัว อำเภอ เมือง จังหวัด นครศรีธรรมราช 80000',
@@ -107,7 +107,7 @@ async function generateInvoice(callback) {
     //Deco
     doc.setFillColor(248,96,81);
     doc.setDrawColor(248,96,81);
-    doc.rect(205, 19, 11, 13, 'FD');
+    doc.rect(205, 17, 11, 15, 'FD');
     doc.setDrawColor(0,0,0);
     //Logo
     await addImageToPDF(items.logoCompany, 10, 10, 20, 24);
@@ -359,7 +359,7 @@ async function generateInvoice(callback) {
     doc.text("ยอมรับใบแจ้งหนี้ / Accepted by", 156.5, 252);
     doc.setLineWidth(0.1);
     doc.line(160, 270, 192.5, 270); //ลายเซ็น
-    await addImageToPDF('https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Autograph_of_Benjamin_Franklin.svg/1200px-Autograph_of_Benjamin_Franklin.svg.png', 161.35, 255, 30.8, 14.23);
+    // await addImageToPDF('https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Autograph_of_Benjamin_Franklin.svg/1200px-Autograph_of_Benjamin_Franklin.svg.png', 161.35, 255, 30.8, 14.23);
     doc.setFont('THSarabunNew','normal');
     doc.text("(.......................................................)", 157, 277); //เซ็นชื่อกำกับ
     /* doc.text("กำก่ำอุอูอ่า",17.5,113.8,'center') */  //ยังไม่ได้ center text

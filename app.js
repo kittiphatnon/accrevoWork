@@ -24,7 +24,7 @@ const payableNote = require('./payableNote');
 }); */
 
 //Invoice
-app.get('/pdf', (req, res) => {
+/* app.get('/pdf', (req, res) => {
   invoice.generateInvoice((err, data) => {
     if (err) {
       res.status(500).send('Error generating PDF');
@@ -33,7 +33,7 @@ app.get('/pdf', (req, res) => {
       res.send(data);
     }
   });
-});
+}); */
 
 //Receipt
 /* app.get('/pdf', (req, res) => {
@@ -108,7 +108,7 @@ app.get('/pdf', (req, res) => {
 }); */
 
 //Payable Note
-/* app.get('/pdf', (req, res) => {
+app.get('/pdf', (req, res) => {
   payableNote.generatePayableNote((err, data) => {
     if (err) {
       res.status(500).send('Error generating PDF');
@@ -117,7 +117,7 @@ app.get('/pdf', (req, res) => {
       res.send(data);
     }
   });
-}); */
+});
 
 
 app.listen(port, () => {
