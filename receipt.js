@@ -412,6 +412,7 @@ async function generateReceipt(callback) {
     if (i < dataEachPage.length - 1) {
       await createHeader(items);
       await createTable(dataEachPage[i]);
+      await createFooter(items);
       doc.text((i+1).toString() + '/' + dataEachPage.length.toString(), 200, 10, 'right')
       doc.addPage();
     }

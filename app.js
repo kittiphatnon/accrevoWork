@@ -10,6 +10,7 @@ const billingNote = require('./billingNote');
 const goodsReceipt = require('./goodsReceipt');
 const serviceReceipt = require('./serviceReceipt');
 const payableNote = require('./payableNote');
+const paymentVoucher = require('./paymentVoucher');
 
  //Quaotation
 /* app.get('/pdf', (req, res) => {
@@ -24,7 +25,7 @@ const payableNote = require('./payableNote');
 }); */
 
 //Invoice
-/* app.get('/pdf', (req, res) => {
+app.get('/pdf', (req, res) => {
   invoice.generateInvoice((err, data) => {
     if (err) {
       res.status(500).send('Error generating PDF');
@@ -33,7 +34,7 @@ const payableNote = require('./payableNote');
       res.send(data);
     }
   });
-}); */
+});
 
 //Receipt
 /* app.get('/pdf', (req, res) => {
@@ -108,7 +109,7 @@ const payableNote = require('./payableNote');
 }); */
 
 //Payable Note
-app.get('/pdf', (req, res) => {
+/* app.get('/pdf', (req, res) => {
   payableNote.generatePayableNote((err, data) => {
     if (err) {
       res.status(500).send('Error generating PDF');
@@ -117,7 +118,19 @@ app.get('/pdf', (req, res) => {
       res.send(data);
     }
   });
-});
+}); */
+
+//Payment Voucher
+/* app.get('/pdf', (req, res) => {
+  paymentVoucher.generatepaymentVoucher((err, data) => {
+    if (err) {
+      res.status(500).send('Error generating PDF');
+    } else {
+      res.setHeader('Content-Type', 'application/pdf');
+      res.send(data);
+    }
+  });
+}); */
 
 
 app.listen(port, () => {
