@@ -61,7 +61,7 @@ const items = {
   paymentDescription:'คอมพ์มหภาคตอกย้ำแพทยสภา โหงวเฮ้ง โซลาร์แซวพุทธภูมิกลาส  ซัพพลายปัจเจกชนผลักดันพันธกิจ อีสเตอร์ เมจิกล็อตช็อปเปอร์พันธุวิศวกรรม เอ็กซ์เพรส วาฟเฟิลเซอร์วิสดีพาร์ตเมนต์ ไฮไลต์เซ็กซี่ ล็อตตอกย้ำ เฮอร์ริเคนธรรม',
   remark:'คอมพ์มหภาคตอกย้ำแพทยสภา โหงวเฮ้ง โซลาร์แซวพุทธภูมิกลาส มายองเนส ซัพพลายปัจเจกชนผลักดันพันธกิจ อีสเตอร์ เมจิกล็อตช็อปเปอร์พันธุวิศวกรรม เอ็กซ์เพรส วาฟเฟิลเซอร์วิสดีพาร์ตเมนต์ ไฮไลต์เซ็กซี่ ล็อตตอกย้ำ เฮอร์ริเคนธรรม',
   approvalPerson:'กิตติภัทธ์ โลวตระกูล',     //ไม่แน่ใจ
-  
+  paymentCondition:'เงินสด',
 };
 
 async function generatepaymentVoucher(callback) {
@@ -114,9 +114,9 @@ async function generatepaymentVoucher(callback) {
     //หัวข้อ
     doc.setFont('THSarabunNew','bold');
     doc.setFontSize(26);
-    doc.text("ใบเสนอราคา",200, 25,'right');
+    doc.text("ใบสำคัญจ่าย",200, 25,'right');
     doc.setFontSize(16);
-    doc.text("Quotation",200, 30,'right');
+    doc.text("Payment Voucher",200, 30,'right');
     
     //คนขาย
     doc.setFontSize(12);
@@ -140,7 +140,7 @@ async function generatepaymentVoucher(callback) {
     
     //ลูกค้า
     doc.setFont('THSarabunNew','bold');
-    doc.text('ลูกค้า / Customer :', 10, 70);
+    doc.text('ผู้รับเงิน / Receiver :', 10, 70);
     doc.text('ที่อยู่ / Address :', 10, 75);
     doc.text('เลขผู้เสียภาษี / Tax ID :', 10, 80);
     doc.text('เลขที่ / No. :', 10, 85);
@@ -149,10 +149,11 @@ async function generatepaymentVoucher(callback) {
     doc.text('วันที่ / Issue :', 105, 80);
     doc.text('ผู้ติดต่อ / Attention :', 105, 85);
     doc.text('เบอร์โทรศัพท์ / Tel. :', 105, 90);
+    doc.text('เงื่อนไขการชำระเงิน / Payment condition :', 10, 95);
     
     //ลูกค้า(นำข้อมูลมาแสดง)
     doc.setFont('THSarabunNew','normal');
-    doc.text(items.contactName, 35.5, 70);
+    doc.text(items.contactName, 36, 70);
     doc.text(items.contactAddress, 32, 75);
     doc.text(items.contactTaxId, 39.5, 80);
     doc.text(items.code, 26.5, 85);
@@ -161,44 +162,47 @@ async function generatepaymentVoucher(callback) {
     doc.text(items.issueDate.slice(0,10), 123, 80);
     doc.text(items.contactPerson, 132, 85);
     doc.text(items.contactPhone, 131.5, 90);
+    doc.text(items.paymentCondition,64.5 ,95);
   }
   
   async function createTable(items) {
     //ตารางรายการสินค้า
-    doc.rect(10, 95, 190, 89);
+    doc.rect(10, 100, 190, 89);
+
+    //เส้นคั่นแถว
+    doc.line(30,100,30,189); //ความกว้างช่อง 20
+    doc.line(105,100,105,189); //ความกว้างช่อง 75
+    doc.line(135,100,135,189);  //ความกว้างช่อง 30
+    doc.line(165,100,165,189); //ความกว้างช่อง 30
+
     //หัวตาราง
     doc.setFont('THSarabunNew','bold');
-    doc.rect(10, 95, 190, 15);
-    doc.text('เลขที่', 14, 100);
-    doc.text('No.', 14.7, 105);
-    doc.text('รหัสสินค้า', 30, 100);
-    doc.text('Product No.', 28.5, 105);
-    doc.text('สินค้า/คำอธิบาย', 65, 100);
-    doc.text('Product/Description', 61, 105);
-    doc.text('จำนวน', 102, 100);
-    doc.text('Quantity', 100.5, 105);
-    doc.text('หน่วย', 119, 100);
-    doc.text('Unit', 119.5, 105);
-    doc.text('ราคาต่อหน่วย(บาท)', 135, 100);
-    doc.text('Unit Price(Baht)', 136.2, 105);
-    doc.text('มูลค่าก่อนภาษี', 172.5, 100);
-    doc.text('Pre-tax amount', 170.5, 105);
+    doc.rect(10, 100, 190, 15);
+    doc.text('รหัส', getStartPoint('รหัส',20)+10,105);
+    doc.text('No.', getStartPoint('No.',20)+10, 110);
+    doc.text('รายการสินค้า', getStartPoint('รายการสินค้า',75)+30, 105);
+    doc.text('Product', getStartPoint('Product',75)+30, 110);
+    doc.text('จำนวน / หน่วย', getStartPoint('จำนวน / หน่วย',30)+105, 105);
+    doc.text('Quantity / Unit', getStartPoint('Quantity / Unit',30)+105, 110);
+    doc.text('ราคาต่อหน่วย(บาท)', getStartPoint('ราคาต่อหน่วย(บาท)',30)+135, 105);
+    doc.text('Unit Price(Baht)', getStartPoint('Unit Price(Baht)',30)+135, 110);
+    doc.text('มูลค่าก่อนภาษี(บาท)', getStartPoint('มูลค่าก่อนภาษี(บาท)',35)+165, 105);
+    doc.text('Amount(Baht)', getStartPoint('Amount(Baht)',35)+165, 110);
+
     
     //ข้อมูลในตาราง
     doc.setFont('THSarabunNew','normal');
     doc.setTextColor(0,0,0);
     
     for (let i=0; i<items.length; i++) {
-      doc.text(items[i].id, getStartPoint(items[i].id,14)+10, 117.5 + (i*12));
-      doc.text(items[i].productId, getStartPoint(items[i].productId,24)+24, 117.5 + (i*12));
-      doc.text(items[i].productName, getStartPoint(items[i].productName,50)+48, 115 + (i*12));
+      doc.text(items[i].productId, getStartPoint(items[i].productId,20)+10, 122.5 + (i*12));
+      doc.text(items[i].productName, getStartPoint(items[i].productName,75)+30, 120 + (i*12));
       doc.setFontSize(10);
-      doc.text(items[i].productDescription, getStartPoint(items[i].productDescription,50)+48, 120 + (i*12));
+      doc.text(items[i].productDescription, getStartPoint(items[i].productDescription,75)+30, 125 + (i*12));
       doc.setFontSize(12);
-      doc.text(items[i].quantity.toString(), getStartPoint(items[i].quantity.toString(),16.5)+98, 117.5 + (i*12));
-      doc.text(items[i].unitName, getStartPoint(items[i].unitName,15.5)+114.5, 117.5 + (i*12));
-      doc.text(items[i].unitPrice.toString(), getStartPoint(items[i].unitPrice.toString(),33)+130, 117.5 + (i*12));
-      doc.text(items[i].priceBeforeTax.toString(), getStartPoint(items[i].priceBeforeTax.toString(),37)+163, 117.5 + (i*12));
+      doc.text(items[i].quantity.toString(), getStartPoint(items[i].quantity.toString(),30)+105, 122.5 + (i*12));;
+      doc.text(items[i].unitPrice.toString(), getStartPoint(items[i].unitPrice.toString(),30)+135, 122.5 + (i*12));
+      doc.text(items[i].priceBeforeTax.toString(), getStartPoint(items[i].priceBeforeTax.toString(),35)+165, 122.5 + (i*12));
     }
     
   }
@@ -206,17 +210,17 @@ async function generatepaymentVoucher(callback) {
   async function createFooter(items) {
     //สรุปเงิน
     doc.setFont('THSarabunNew', 'bold');
-    doc.text('ส่วนลด / Discount', 105, 190);
-    doc.text('ราคาสุทธิสินค้าที่เสียภาษี / Sub Total', 105, 195);
-    doc.text('ภาษีมูลค่าเพิ่ม / Vat', 105, 200);
-    doc.text('ราคารวมก่อนหัก ณ ที่จ่าย / Total', 105, 205);
-    doc.text('จำนวนเงินรวมทั้งสิ้น / Grand Total', 105, 210);
+    doc.text('ส่วนลด / Discount', 105, 195);
+    doc.text('ราคาสุทธิสินค้าที่เสียภาษี / Sub Total', 105, 200);
+    doc.text('ภาษีมูลค่าเพิ่ม / Vat', 105, 205);
+    doc.text('ราคารวมก่อนหัก ณ ที่จ่าย / Total', 105, 210);
+    doc.text('จำนวนเงินรวมทั้งสิ้น / Grand Total', 105, 215);
     
-    doc.text(items.discountAmount, 200, 190,'right');
-    doc.text(items.subTotal, 200, 195,'right');
-    doc.text(items.vatAmount, 200, 200,'right');
-    doc.text(items.total, 200, 205,'right');
-    doc.text(items.grandTotal, 200, 210,'right');
+    doc.text(items.discountAmount, 200, 195,'right');
+    doc.text(items.subTotal, 200, 200,'right');
+    doc.text(items.vatAmount, 200, 205,'right');
+    doc.text(items.total, 200, 210,'right');
+    doc.text(items.grandTotal, 200, 215,'right');
     
     const moneyInText = thaiBaht.ArabicNumberToText(items.grandTotal);
     const moneyEngText = engBaht.toWords(items.grandTotal);
@@ -252,10 +256,10 @@ async function generatepaymentVoucher(callback) {
       });
       
       
-      doc.text(line1, 200, 215, 'right');
-      doc.text(line2, 200, 220, 'right');
-      doc.text(eng1, 200, 225, 'right');
-      doc.text(eng2, 200, 230, 'right');
+      doc.text(line1, 200, 220, 'right');
+      doc.text(line2, 200, 225, 'right');
+      doc.text(eng1, 200, 230, 'right');
+      doc.text(eng2, 200, 235, 'right');
     }
     displayAllMoneyText(allMoneyText, moneyEngText);
     

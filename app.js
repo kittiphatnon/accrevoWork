@@ -25,7 +25,7 @@ const paymentVoucher = require('./paymentVoucher');
 }); */
 
 //Invoice
-app.get('/pdf', (req, res) => {
+/* app.get('/pdf', (req, res) => {
   invoice.generateInvoice((err, data) => {
     if (err) {
       res.status(500).send('Error generating PDF');
@@ -34,7 +34,7 @@ app.get('/pdf', (req, res) => {
       res.send(data);
     }
   });
-});
+}); */
 
 //Receipt
 /* app.get('/pdf', (req, res) => {
@@ -121,7 +121,7 @@ app.get('/pdf', (req, res) => {
 }); */
 
 //Payment Voucher
-/* app.get('/pdf', (req, res) => {
+app.get('/pdf', (req, res) => {
   paymentVoucher.generatepaymentVoucher((err, data) => {
     if (err) {
       res.status(500).send('Error generating PDF');
@@ -130,7 +130,7 @@ app.get('/pdf', (req, res) => {
       res.send(data);
     }
   });
-}); */
+});
 
 
 app.listen(port, () => {
