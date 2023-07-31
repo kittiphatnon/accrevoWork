@@ -2,15 +2,16 @@ const express = require('express');
 const app = express();
 const port = 8000;
 const quaotation = require('./quaotation');
-const invoice = require('./invoice');
-const receipt = require('./receipt');
-const purchaseRequisition = require('./purchaseRequisition');
-const purchaseOrder = require('./purchaseOrder');
-const billingNote = require('./billingNote');
-const goodsReceipt = require('./goodsReceipt');
-const serviceReceipt = require('./serviceReceipt');
-const payableNote = require('./payableNote');
-const paymentVoucher = require('./paymentVoucher');
+// const invoice = require('./invoice');
+// const receipt = require('./receipt');
+// const purchaseRequisition = require('./purchaseRequisition');
+// const purchaseOrder = require('./purchaseOrder');
+// const billingNote = require('./billingNote');
+// const goodsReceipt = require('./goodsReceipt');
+// const serviceReceipt = require('./serviceReceipt');
+// const payableNote = require('./payableNote');
+// const paymentVoucher = require('./paymentVoucher');
+const certificationofExpenses = require('./certificationofExpenses');
 
  //Quaotation
 /* app.get('/pdf', (req, res) => {
@@ -121,8 +122,20 @@ const paymentVoucher = require('./paymentVoucher');
 }); */
 
 //Payment Voucher
-app.get('/pdf', (req, res) => {
+/* app.get('/pdf', (req, res) => {
   paymentVoucher.generatepaymentVoucher((err, data) => {
+    if (err) {
+      res.status(500).send('Error generating PDF');
+    } else {
+      res.setHeader('Content-Type', 'application/pdf');
+      res.send(data);
+    }
+  });
+}); */
+
+//Certification of Expenses
+app.get('/pdf', (req, res) => {
+  certificationofExpenses.generateCertification((err, data) => {
     if (err) {
       res.status(500).send('Error generating PDF');
     } else {
